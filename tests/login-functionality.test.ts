@@ -1,64 +1,52 @@
 import { test, expect } from '@playwright/test';
+import { credentials, errorMessages } from './variables/credentials';
+import { urls } from './variables/urls';
+import { selectors } from './variables/selectors';
+import { login } from './utils/login';
 
 test.describe('Login functionality tests', () => {
-
   test('Successful login with standard user', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/v1/');
+    await login(page, credentials.standardUser.username, credentials.standardUser.password);
 
-    // Fill in username and password fields
-    await page.fill('input[data-test="username"]', 'standard_user');
-    await page.fill('input[data-test="password"]', 'secret_sauce');
-
-    // Click on login button
-    await page.click('input[id="login-button"]');
-
-    // Validate successful login by checking for a specific element on the landing page
-    await expect(page).toHaveURL(/inventory.html/);
-    await expect(page.locator('.inventory_list')).toBeVisible();
+    // Validate successful login
+    await expect(page).toHaveURL(urls.inventoryPage);
+    await expect(page.locator(selectors.inventoryPage.inventoryList)).toBeVisible();
   });
 
   test('Login attempt with locked out user', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/v1/');
-
-    // Fill in username and password fields
-    await page.fill('input[data-test="username"]', 'locked_out_user');
-    await page.fill('input[data-test="password"]', 'secret_sauce');
-
-    // Click on login button
-    await page.click('input[id="login-button"]');
+    await login(page, credentials.lockedOutUser.username, credentials.lockedOutUser.password);
 
     // Validate error message
-    const errorMessage = await page.locator('h3[data-test="error"]');
+    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
     await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText('Sorry, this user has been locked out.');
+    await expect(errorMessage).toContainText(errorMessages.lockedOut);
+  });
+
+  test('Login attempt with incorrect username', async ({ page }) => {
+    await login(page, credentials.incorrectUsername, credentials.standardUser.password);
+
+    // Validate error message
+    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
+    await expect(errorMessage).toBeVisible();
+    await expect(errorMessage).toContainText(errorMessages.incorrectCredentials);
   });
 
   test('Login attempt with incorrect password', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/v1/');
-
-    // Fill in username and incorrect password
-    await page.fill('input[data-test="username"]', 'standard_user');
-    await page.fill('input[data-test="password"]', 'wrong_password');
-
-    // Click on login button
-    await page.click('input[id="login-button"]');
+    await login(page, credentials.standardUser.username, credentials.incorrectPassword);
 
     // Validate error message
-    const errorMessage = await page.locator('h3[data-test="error"]');
+    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
     await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText('Username and password do not match');
+    await expect(errorMessage).toContainText(errorMessages.incorrectCredentials);
   });
 
   test('Empty login fields', async ({ page }) => {
-    await page.goto('https://www.saucedemo.com/v1/');
-
-    // Click on login button without entering credentials
-    await page.click('input[id="login-button"]');
+    await page.goto(urls.loginPage);
+    await page.click(selectors.loginPage.loginButton);
 
     // Validate error message
-    const errorMessage = await page.locator('h3[data-test="error"]');
+    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
     await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText('Username is required');
+    await expect(errorMessage).toContainText(errorMessages.usernameRequired);
   });
-
 });
