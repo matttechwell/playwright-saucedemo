@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { credentials } from './variables/credentials';
-import { urls } from './variables/urls';
-import { selectors } from './variables/selectors';
-import { login } from './utils/login';
-import { addItemToCart, getCartItemCount, sortProducts, logout } from './utils/inventory';
+import { credentials } from '../fixtures/credentials';
+import { urls } from '../../constants/urls';
+import { selectors } from '../../page-objects/selectors';
+import { login } from '../utils/login';
+import { addItemToCart, getCartItemCount, sortProducts, logout } from '../utils/inventory';
 
 test.describe('Inventory functionality tests', () => {
   test.beforeEach(async ({ page }) => {
