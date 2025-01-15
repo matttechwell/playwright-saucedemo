@@ -16,3 +16,9 @@ export const credentials = {
     password: 'secret_sauce',
   },
 };
+
+
+export const errorMsg = {
+  lockedOutUser: 'Epic sadface: Sorry, this user has been locked out.',
+  invalidUser: 'Epic sadface: Username and password do not match any user in this service'
+}
