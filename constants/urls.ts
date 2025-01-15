@@ -1,5 +1,12 @@
-export const urls = {
-    loginPage: 'https://www.saucedemo.com/v1/',
-    inventoryPage: /inventory.html/,
-  };
-    
+export const URLs = {
+  baseUrl: 'https://www.saucedemo.com',
+};
+
+export const expandtestingUrls = {
+  baseUrl: process.env.BASE_URL || 'https://practice.expandtesting.com/notes/api',
+  endpoints: {
+    healthCheck: '/health-check',
+    notes: '/notes',
+    users: '/users',
+  },
+};

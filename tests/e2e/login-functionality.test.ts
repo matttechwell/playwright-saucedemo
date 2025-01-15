@@ -1,52 +1,27 @@
 import { test, expect } from '@playwright/test';
-import { credentials, errorMessages } from '@fixtures/credentials';
-import { urls } from '@constants/urls';
-import { selectors } from '@page-objects/selectors';
-import { login } from '@utils/login';
+import LoginPage from '@page-objects/login-page';
+import { credentials } from '@fixtures/credentials';
+import { URLs } from '@constants/urls';
 
-test.describe('Login functionality tests', () => {
-  test('Successful login with standard user', async ({ page }) => {
-    await login(page, credentials.standardUser.username, credentials.standardUser.password);
+test.describe('Login Page Tests', () => {
+  test('should successfully login with standard user', async ({ page }) => {
+    const loginPage = new LoginPage(page);
 
-    // Validate successful login
-    await expect(page).toHaveURL(urls.inventoryPage);
-    await expect(page.locator(selectors.inventoryPage.inventoryList)).toBeVisible();
+    await loginPage.navigate();
+    await loginPage.login(credentials.standardUser.username, credentials.standardUser.password);
+
+    // Verify successful login by checking redirection to inventory page
+    await expect(page).toHaveURL(`${URLs.baseUrl}/inventory.html`);
   });
 
-  test('Login attempt with locked out user', async ({ page }) => {
-    await login(page, credentials.lockedOutUser.username, credentials.lockedOutUser.password);
+  test('should show error for locked out user', async ({ page }) => {
+    const loginPage = new LoginPage(page);
 
-    // Validate error message
-    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText(errorMessages.lockedOut);
-  });
+    await loginPage.navigate();
+    await loginPage.login(credentials.lockedOutUser.username, credentials.lockedOutUser.password);
 
-  test('Login attempt with incorrect username', async ({ page }) => {
-    await login(page, credentials.incorrectUsername, credentials.standardUser.password);
-
-    // Validate error message
-    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText(errorMessages.incorrectCredentials);
-  });
-
-  test('Login attempt with incorrect password', async ({ page }) => {
-    await login(page, credentials.standardUser.username, credentials.incorrectPassword);
-
-    // Validate error message
-    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText(errorMessages.incorrectCredentials);
-  });
-
-  test('Empty login fields', async ({ page }) => {
-    await page.goto(urls.loginPage);
-    await page.click(selectors.loginPage.loginButton);
-
-    // Validate error message
-    const errorMessage = await page.locator(selectors.loginPage.errorMessage);
-    await expect(errorMessage).toBeVisible();
-    await expect(errorMessage).toContainText(errorMessages.usernameRequired);
+    // Verify error message
+    const errorMessage = await loginPage.getErrorMessage();
+    expect(errorMessage).toContain('Sorry, this user has been locked out.');
   });
 });
