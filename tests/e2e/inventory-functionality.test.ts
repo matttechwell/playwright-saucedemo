@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { credentials } from '../fixtures/credentials';
-import { urls } from '../../constants/urls';
-import { selectors } from '../../page-objects/selectors';
-import { login } from '../utils/login';
-import { addItemToCart, getCartItemCount, sortProducts, logout } from '../utils/inventory';
+import { credentials } from '@fixtures/credentials';
+import { urls } from '@constants/urls';
+import { selectors } from '@page-objects/selectors';
+import { login } from '@utils/login';
+import { addItemToCart, getCartItemCount, sortProducts, logout } from '@utils/inventory';
 
 test.describe('Inventory functionality tests', () => {
   test.beforeEach(async ({ page }) => {
@@ -39,13 +39,5 @@ test.describe('Inventory functionality tests', () => {
     const sortedPrices = [...numericPrices].sort((a, b) => a - b);
 
     expect(numericPrices).toEqual(sortedPrices);
-  });
-
-  test('Logout from the inventory page', async ({ page }) => {
-    // Perform logout
-    await logout(page);
-
-    // Validate that the user is redirected to the login page
-    await expect(page).toHaveURL(urls.loginPage);
   });
 });

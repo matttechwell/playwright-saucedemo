@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".", 
+    "paths": {
+      "@config/*": ["config/*"],
+      "@constants/*": ["constants/*"],
+      "@page-objects/*": ["page-objects/*"],
+      "@tests/*": ["tests/*"],
+      "@utils/*": ["utils/*"],
+      "@fixtures/*": ["fixtures/*"],
+    },
+    "target": "ESNext",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "types": ["@playwright/test", "node"]
+  }
+}

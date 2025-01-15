@@ -1,5 +1,5 @@
 import { Page } from '@playwright/test';
-import { selectors } from '../../page-objects/selectors';
+import { selectors } from '@page-objects/selectors';
 
 export const addItemToCart = async (page: Page, itemIndex: number): Promise<void> => {
   const productAddToCartButton = page.locator(selectors.inventoryPage.productAddToCartButton).nth(itemIndex);

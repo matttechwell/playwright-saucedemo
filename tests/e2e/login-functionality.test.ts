@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { credentials, errorMessages } from '../fixtures/credentials';
-import { urls } from '../../constants/urls';
-import { selectors } from '../../page-objects/selectors';
-import { login } from '../utils/login';
+import { credentials, errorMessages } from '@fixtures/credentials';
+import { urls } from '@constants/urls';
+import { selectors } from '@page-objects/selectors';
+import { login } from '@utils/login';
 
 test.describe('Login functionality tests', () => {
   test('Successful login with standard user', async ({ page }) => {

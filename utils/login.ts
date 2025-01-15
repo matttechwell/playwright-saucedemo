@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
-import { selectors } from '../../page-objects/selectors';
-import { credentials } from '../fixtures/credentials';
+import { selectors } from '@page-objects/selectors';
+import { credentials } from '@fixtures/credentials';
 
 export const login = async (
   page: Page,
