@@ -1,0 +1,62 @@
+<testsuites id="" name="" tests="3" failures="1" skipped="0" errors="0" time="1.470125">
+<testsuite name="login.spec.ts" timestamp="2025-01-19T15:49:25.302Z" hostname="chromium" tests="3" failures="1" skipped="0" time="2.164" errors="0">
+<testcase name="Login Functionality › Valid login with standard_user" classname="login.spec.ts" time="0.768">
+<failure message="login.spec.ts:12:9 Valid login with standard_user" type="FAILURE">
+<![CDATA[  [chromium] › login.spec.ts:12:9 › Login Functionality › Valid login with standard_user ───────────
+
+    Error: expect(received).toBeTruthy()
+
+    Received: false
+
+      20 |         // Verify successful login
+      21 |         const isSuccess = await loginPage.isLoginSuccessful('#invedhtntory_container');
+    > 22 |         expect(isSuccess).toBeTruthy();
+         |                           ^
+      23 |     });
+      24 |
+      25 |     test('Invalid login with incorrect credentials', async ({ page }) => {
+        at C:\Users\Vance\projects\playwright-projects\playwright-workspace\tests\e2e\login.spec.ts:22:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\test-failed-1.png]]
+
+[[ATTACHMENT|..\test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\video.webm]]
+
+[[ATTACHMENT|..\test-results\login-Login-Functionality-Valid-login-with-standard-user-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Login Functionality › Invalid login with incorrect credentials" classname="login.spec.ts" time="0.708">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\login-Login-Functionality--b7479--with-incorrect-credentials-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="Login Functionality › Locked out user login attempt" classname="login.spec.ts" time="0.688">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\test-results\login-Login-Functionality-Locked-out-user-login-attempt-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
