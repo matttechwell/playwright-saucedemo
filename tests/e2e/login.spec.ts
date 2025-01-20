@@ -18,7 +18,7 @@ test.describe('Login Functionality', () => {
         await loginPage.login(username, password);
 
         // Verify successful login
-        const isSuccess = await loginPage.isLoginSuccessful('#invedhtntory_container');
+        const isSuccess = await loginPage.isLoginSuccessful('#inventory_container');
         expect(isSuccess).toBeTruthy();
     });
 
