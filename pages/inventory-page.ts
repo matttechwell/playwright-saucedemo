@@ -14,6 +14,11 @@ export class InventoryPage {
     this.page = page;
   }
 
+  // Utility method to format product names
+  private formatName(name: string): string {
+    return name.toLowerCase().replace(/\s+/g, '-');
+  }
+
   // Open the side menu
   async openMenu(): Promise<void> {
     await this.page.click(this.menuButton);
@@ -26,7 +31,8 @@ export class InventoryPage {
 
   // Add a specific product to the cart
   async addItemToCart(itemName: string): Promise<void> {
-    const buttonSelector = this.addToCartButton(itemName);
+    const formattedName = this.formatName(itemName);
+    const buttonSelector = this.addToCartButton(formattedName);
     await this.page.click(buttonSelector);
   }
 

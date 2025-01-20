@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { InventoryPage } from '@pages/inventory-page';
 import { LoginPage } from '@pages/login-page';
+import { URLs } from '@utils/constants';
 import * as creds from '@data/credentials.json';
 import * as fs from 'fs';
 
@@ -20,8 +21,7 @@ test.describe('Inventory Page Tests', () => {
 
       // Perform login and save auth state
       const loginPage = new LoginPage(page);
-
-      await loginPage.navigateTo('https://www.saucedemo.com/');
+      await loginPage.navigateTo(URLs.getFullPath(URLs.paths.login));
       await loginPage.login(creds.users.standard_user, creds.password);
 
       // Save the authentication state after logging in
@@ -33,11 +33,8 @@ test.describe('Inventory Page Tests', () => {
 
   test('Verify products are listed on the inventory page', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
-
     // Navigate directly to the inventory page
-    await page.goto('https://www.saucedemo.com/inventory.html');
-
-    // Verify product list is visible
+    await page.goto(URLs.getFullPath(URLs.paths.inventory));
     const isProductListVisible = await inventoryPage.isProductListVisible();
     expect(isProductListVisible).toBeTruthy();
   });
@@ -46,7 +43,7 @@ test.describe('Inventory Page Tests', () => {
     const inventoryPage = new InventoryPage(page);
 
     // Navigate directly to the inventory page
-    await page.goto('https://www.saucedemo.com/inventory.html');
+    await page.goto(URLs.getFullPath(URLs.paths.inventory));
 
     // Add item to the cart
     await inventoryPage.addItemToCart('sauce-labs-backpack');
@@ -54,14 +51,14 @@ test.describe('Inventory Page Tests', () => {
     // Open cart and verify
     await inventoryPage.openCart();
     const cartUrl = page.url();
-    expect(cartUrl).toContain('cart');
+    expect(cartUrl).toContain(URLs.getFullPath(URLs.paths.cart));
   });
 
   test('Logout from the inventory page', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
 
     // Navigate directly to the inventory page
-    await page.goto('https://www.saucedemo.com/inventory.html');
+    await page.goto(URLs.getFullPath(URLs.paths.inventory));
 
     // Logout
     await inventoryPage.openMenu();
@@ -69,6 +66,6 @@ test.describe('Inventory Page Tests', () => {
 
     // Verify redirection to login page
     const loginUrl = page.url();
-    expect(loginUrl).toBe('https://www.saucedemo.com/');
-  });
+    expect(loginUrl).toBe(URLs.sauceDemo);
+  });  
 });
